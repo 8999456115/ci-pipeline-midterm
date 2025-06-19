@@ -45,18 +45,19 @@ jobs:
       run: |
         echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-    - name: Tag Docker image based on branch
-      run: |
+        - name: Tag Docker image based on branch
+      
+    - run: |
         if [[ "${GITHUB_REF##*/}" == "develop" ]]; then
-          docker tag ci-pipeline-midterm ghcr.io/${{ github.repository }}:dev
+          docker tag ci-pipeline-midterm ghcr.io/8999456115/ci-pipeline-midterm:dev
         else
-          docker tag ci-pipeline-midterm ghcr.io/${{ github.repository }}:latest
+          docker tag ci-pipeline-midterm ghcr.io/8999456115/ci-pipeline-midterm:latest
         fi
 
     - name: Push Docker image to GHCR
       run: |
         if [[ "${GITHUB_REF##*/}" == "develop" ]]; then
-          docker push ghcr.io/${{ github.repository }}:dev
+          docker push ghcr.io/8999456115/ci-pipeline-midterm:dev
         else
-          docker push ghcr.io/${{ github.repository }}:latest
+          docker push ghcr.io/8999456115/ci-pipeline-midterm:latest
         fi
