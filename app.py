@@ -5,7 +5,7 @@ import os
 load_dotenv(f'.env.{os.getenv("ENV")}')
 
 app = Flask(__name__)
-app.config['DEBUG'] = os.getenv('DEBUG', 'True') == 'True'
+app.config['DEBUG'] = os.getenv('DEBUG', 'False') == 'True'
 
 
 @app.route('/')
