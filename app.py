@@ -5,7 +5,7 @@ import os
 load_dotenv(f'.env.{os.getenv("ENV")}')
 
 app = Flask(__name__)
-app.config['DEBUG'] = os.getenv('DEBUG', 'False') == 'True'
+app.config['DEBUG'] = os.getenv('DEBUG', 'True') == 'True'
 
 
 @app.route('/')
@@ -14,4 +14,5 @@ def hello():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
+
