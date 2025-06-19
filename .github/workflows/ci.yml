@@ -39,21 +39,22 @@ jobs:
       run: |
         docker build -t ci-pipeline-midterm .
 
-    - name: Log in to GitHub Container Registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u 8999456115 --password-stdin
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
 
-    - name: Tag Docker image based on branch
+    - name: Tag Docker image for Docker Hub
       run: |
         if [[ "${GITHUB_REF##*/}" == "develop" ]]; then
-          docker tag ci-pipeline-midterm ghcr.io/8999456115/ci-pipeline-midterm:dev
+          docker tag ci-pipeline-midterm ${{ secrets.DOCKERHUB_USER }}/ci-pipeline-midterm:dev
         else
-          docker tag ci-pipeline-midterm ghcr.io/8999456115/ci-pipeline-midterm:latest
+          docker tag ci-pipeline-midterm ${{ secrets.DOCKERHUB_USER }}/ci-pipeline-midterm:latest
         fi
 
-    - name: Push Docker image to GHCR
+    - name: Push Docker image to Docker Hub
       run: |
         if [[ "${GITHUB_REF##*/}" == "develop" ]]; then
-          docker push ghcr.io/8999456115/ci-pipeline-midterm:dev
+          docker push ${{ secrets.DOCKERHUB_USER }}/ci-pipeline-midterm:dev
         else
-          docker push ghcr.io/8999456115/ci-pipeline-midterm:latest
+          docker push ${{ secrets.DOCKERHUB_USER }}/ci-pipeline-midterm:latest
         fi
+
